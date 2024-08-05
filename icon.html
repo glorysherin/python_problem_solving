@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Input with Icons</title>
+    <style>
+        .select-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .styled-select {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .styled-select img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .options-container {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: white;
+            z-index: 1;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .option img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .option:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <div class="select-container" id="select-container">
+            <div class="styled-select" id="selected-option">
+                <img src="/mnt/data/gridicons_notice-outline.png" alt="Icon">
+                <span>Select an option</span>
+            </div>
+            <div class="options-container" id="options-container">
+                <div class="option" data-value="notice">
+                    <img src="https://www.google.com/imgres?q=calculator%20application%20in%20python&imgurl=https%3A%2F%2Fflet.dev%2Fimg%2Fdocs%2Fcalc-tutorial%2Fcalc-app.gif&imgrefurl=https%3A%2F%2Fflet.dev%2Fdocs%2Ftutorials%2Fpython-calculator%2F&docid=37p54-3efL82OM&tbnid=S6y7DDiYR0iOcM&vet=12ahUKEwjtlZ3G24CHAxUlh1YBHXQ7B6MQM3oECGgQAA..i&w=656&h=662&hcb=2&ved=2ahUKEwjtlZ3G24CHAxUlh1YBHXQ7B6MQM3oECGgQAA" alt="Notice">
+                    <span>Notice</span>
+                </div>
+                <div class="option" data-value="repair">
+                    <img src="/mnt/data/mdi_car-repair.png" alt="Repair">
+                    <span>Repair</span>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="icons" id="selected-value">
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('selected-option').addEventListener('click', function () {
+            document.getElementById('options-container').style.display = 'block';
+        });
+
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function () {
+                const imgSrc = this.querySelector('img').src;
+                const text = this.querySelector('span').textContent;
+                const value = this.getAttribute('data-value');
+
+                document.getElementById('selected-option').innerHTML = `<img src="${imgSrc}" alt="Icon"><span>${text}</span>`;
+                document.getElementById('selected-value').value = value;
+                document.getElementById('options-container').style.display = 'none';
+            });
+        });
+
+        // Close the dropdown when clicking outside
+        document.addEventListener('click', function (event) {
+            const selectContainer = document.getElementById('select-container');
+            if (!selectContainer.contains(event.target)) {
+                document.getElementById('options-container').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
